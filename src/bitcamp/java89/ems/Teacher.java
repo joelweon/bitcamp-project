@@ -1,7 +1,7 @@
 package bitcamp.java89.ems;
 
 public class Teacher {
-
+  String id;
   String name;
   String email;
   String tel;
