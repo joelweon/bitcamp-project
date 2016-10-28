@@ -9,7 +9,7 @@ public class Eduapp {
     Teacher teacher = new Teacher();
 
 
-    System.out.print("이름?(예:남경훈) ");
+    System.out.print("이름?(예:홍길동) ");
     teacher.name = keyScan.nextLine();
 
     System.out.print("이메일?(예:bit@bitc.com) ");
@@ -50,12 +50,12 @@ public class Eduapp {
     System.out.printf("전화번호: %s\n", teacher.tel);
     System.out.printf("전공: %s\n", teacher.major);
     System.out.printf("주요언어: %s\n", teacher.majorLanguage);
-    System.out.printf("저서: %b\n", teacher.book);
-    System.out.printf("프로젝트명: %d\n", teacher.projectName);
+    System.out.printf("저서: %s\n", teacher.book);
+    System.out.printf("프로젝트명: %s\n", teacher.projectName);
     System.out.printf("Git주소: %s\n", teacher.gitAddress);
-    System.out.printf("직장경력: %s\n", teacher.workExperience);
-    System.out.printf("강의경력: %s\n", teacher.lectureExperience);
-    System.out.printf("나이: %s\n", teacher.age);
-    System.out.printf("희망급여: %s\n", teacher.salary);
+    System.out.printf("직장경력: %d\n", teacher.workExperience);
+    System.out.printf("강의경력: %d\n", teacher.lectureExperience);
+    System.out.printf("나이: %d\n", teacher.age);
+    System.out.printf("희망급여: %d\n", teacher.salary);
   }
 }
