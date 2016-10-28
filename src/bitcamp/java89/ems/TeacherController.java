@@ -1,15 +1,37 @@
 package bitcamp.java89.ems;
 import java.util.Scanner;
 public class TeacherController {
-  Teacher[] teachers = new Teacher[100];
-  int length = 0;
-  Scanner keyScan;
+
+  private Teacher[] teachers = new Teacher[100];
+  private int length = 0;
+  private Scanner keyScan;
+
+  public void service() {
+    loop:
+    while (true) {
+      System.out.print("강사관리> ");
+      String command = keyScan.nextLine().toLowerCase();
+
+
+      switch (command) {
+        case "add": this.doAdd(); break;
+        case "list": this.doList(); break;
+        case "view": this.doView(); break;
+        case "delete": this.doDelete(); break;
+        case "update": this.doUpdate(); break;
+        case "main":
+          break loop;
+        default:
+          System.out.println("지원하지 않는 명령어입니다.");
+      }
+    }
+  }
 
   public TeacherController(Scanner keyScan) {
     this.keyScan = keyScan;
   }
 
-  void doAdd() {
+  private void doAdd() {
     while (length < this.teachers.length) {
       Teacher teacher = new Teacher();
       Scanner keyScan = new Scanner(System.in);
@@ -32,7 +54,7 @@ public class TeacherController {
       System.out.print("주요언어?(예:C, JAVA) ");
       teacher.majorLanguage = this.keyScan.nextLine();
 
-      System.out.print("저서?(예:자바 웹 개발 워크북 소개) ");
+      System.out.print("저서?(예:자바 웹 개발 워크북) ");
       teacher.book = this.keyScan.nextLine();
 
       System.out.print("프로젝트명?(예:ABC) ");
@@ -50,7 +72,7 @@ public class TeacherController {
       System.out.print("나이?(예:40) ");
       teacher.age = Integer.parseInt(this.keyScan.nextLine());
 
-      System.out.print("희망급여?(예:100000) ");
+      System.out.print("희망급여?(예:1000000) ");
       teacher.salary = Integer.parseInt(this.keyScan.nextLine());
 
       teachers[length++] = teacher;
@@ -61,7 +83,7 @@ public class TeacherController {
   }
 
 
-  public void doList() {
+  private void doList() {
     for (int i = 0; i < this.length; i++) {
       Teacher teacher = this.teachers[i];
       System.out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%d,%d,%d,%d\n",
@@ -82,7 +104,7 @@ public class TeacherController {
     }
   }
 
-  void doView() {
+  private void doView() {
     System.out.print("조회할 id입력: ");
     String idInput = this.keyScan.nextLine().toLowerCase();
     for (int i = 0; i < this.length; i++) {
@@ -106,7 +128,7 @@ public class TeacherController {
     }
   }
 
-  void doDelete() {
+  private void doDelete() {
     System.out.print("삭제할 id입력: ");
     String id = this.keyScan.nextLine().toLowerCase();
     for (int i = 0; i < this.length; i++) {
@@ -115,14 +137,14 @@ public class TeacherController {
           this.teachers[i] = this.teachers[x];
         }
         this.teachers[--length] = null;
-        System.out.printf("%s 학생 정보를 삭제하였습니다.\n", id);
+        System.out.printf("%s 강사 정보를 삭제하였습니다.\n", id);
         return;
       }
     }
-    System.out.printf("%s 학생이 없습니다.\n", id);
+    System.out.printf("%s 해당 강사가 없습니다.\n", id);
   }
 
-  void doUpdate() {
+  private void doUpdate() {
     System.out.print("변경할 id입력: ");
     String id = this.keyScan.nextLine().toLowerCase();
     for (int i = 0; i < this.length; i++) {

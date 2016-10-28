@@ -15,20 +15,21 @@ public class EduApp {
       System.out.print("명령> ");
       String command = keyScan.nextLine().toLowerCase();
 
+
       switch (command) {
-        case "add": teacherController.doAdd(); break;
-        case "list": teacherController.doList(); break;
-        case "view": teacherController.doView(); break;
-        case "delete": teacherController.doDelete(); break;
-        case "update": teacherController.doUpdate(); break;
+        case "menu": doMenu(); break;
+        case "go 1": teacherController.service(); break;
         case "quit":
-          System.out.println("Good Bye!");
+        System.out.println("Good Bye!");
           break loop;
         default:
           System.out.println("지원하지 않는 명령어입니다.");
       }
     }
-
   }
-
+  static void doMenu() {
+    System.out.println("[메뉴]");
+    System.out.println("1. 강사관리");
+    System.out.print("메뉴 이동은 'go 메뉴번호'를 입력하세요.");
+  }
 }
