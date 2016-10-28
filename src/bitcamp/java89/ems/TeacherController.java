@@ -1,31 +1,9 @@
-package step09.ex3;
+package bitcamp.java89.ems;
 import java.util.Scanner;
-public class Eduapp {
+public class TeacherController {
   static Teacher[] teachers = new Teacher[100];
   static int length = 0;
-  static Scanner keyScan = new Scanner(System.in);
-
-  public static void main(String[] args) {
-    System.out.println();
-    System.out.printf("비트캠프 관리시스템에 오신걸 환영합니다.\n\n");
-
-
-    loop:
-    while (true) {
-      System.out.print("명령> ");
-      String command = keyScan.nextLine().toLowerCase();
-      switch (command) {
-        case "add": doAdd(); break;
-        case "list": doList(); break;
-        case "view": doView(); break;
-        case "quit":
-          System.out.println("Good Bye!");
-          break loop;
-        default:
-          System.out.println("지원하지 않는 명령어입니다.");
-      }
-    }
-  }
+  static Scanner keyScan;
 
   static void doAdd() {
     while (length < teachers.length) {
@@ -98,7 +76,7 @@ public class Eduapp {
         teacher.age,
         teacher.salary);
 
-        System.out.println("-----------------------------");
+        System.out.println("-----------------------------------");
     }
   }
 
@@ -120,7 +98,7 @@ public class Eduapp {
         System.out.printf("나이: %d\n", teachers[i].age);
         System.out.printf("희망급여: %d\n", teachers[i].salary);
 
-        System.out.println("-----------------------------");
+        System.out.println("--------------------aa------------");
         break;
       }
     }
