@@ -1,19 +1,19 @@
 package bitcamp.java89.ems.server.vo;
 
 public class Teacher {
-  String id;
-  String name;
-  String email;
-  String tel;
-  String major;
-  String majorLanguage;
-  String book;
-  String projectName;
-  String gitAddress;
-  int workExperience;
-  int lectureExperience;
-  int age;
-  int salary;
+  protected String id;
+  protected String name;
+  protected String email;
+  protected String tel;
+  protected String major;
+  protected String majorLanguage;
+  protected String book;
+  protected String projectName;
+  protected String gitAddress;
+  protected int workExperience;
+  protected int lectureExperience;
+  protected int age;
+  protected int salary;
 
 
   public Teacher() {}
