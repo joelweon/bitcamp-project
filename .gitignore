@@ -1,2 +1,10 @@
 /bin/
-/.Ds_store
+/.gradle/
+/.settings/
+/gradle/
+/.classpath
+/.project
+/build/ 
+/temp/
+/.DS_Store
+/*.data

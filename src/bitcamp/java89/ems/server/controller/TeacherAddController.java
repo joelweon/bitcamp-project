@@ -9,7 +9,10 @@ import bitcamp.java89.ems.server.vo.Teacher;
 
 public class TeacherAddController extends AbstractCommand {
 
-  
+  @Override
+  public String getCommandString() {
+    return "teacher/add";
+  }
   @Override
   protected void doResponse(HashMap<String,String> paramMap, PrintStream out)
       throws Exception {

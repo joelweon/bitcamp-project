@@ -8,7 +8,10 @@ import bitcamp.java89.ems.server.dao.ContactDao;
 import bitcamp.java89.ems.server.vo.Contact;
 
 public class ContactUpdateController extends AbstractCommand {
-
+  @Override
+  public String getCommandString() {
+    return "contact/update";
+  }
   @Override
   protected void doResponse(HashMap<String,String> paramMap, PrintStream out)
       throws Exception {

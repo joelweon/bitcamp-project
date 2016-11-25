@@ -9,6 +9,10 @@ import bitcamp.java89.ems.server.dao.ContactDao;
 public class ContactDeleteController extends AbstractCommand {
 
   @Override
+  public String getCommandString() {
+    return "contact/delete";
+  }
+  @Override
   protected void doResponse(HashMap<String,String> paramMap, PrintStream out)
       throws Exception {
     ContactDao contactDao = ContactDao.getInstance();
