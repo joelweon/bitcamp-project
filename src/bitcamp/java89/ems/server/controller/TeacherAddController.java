@@ -3,23 +3,22 @@ package bitcamp.java89.ems.server.controller;
 import java.io.PrintStream;
 import java.util.HashMap;
 
-import bitcamp.java89.ems.server.Command;
+import bitcamp.java89.ems.server.AbstractCommand;
 import bitcamp.java89.ems.server.dao.TeacherDao;
 import bitcamp.java89.ems.server.vo.Teacher;
 
-public class TeacherAddController implements Command {
-  private TeacherDao teacherDao;
-  
-  public TeacherAddController() {
-    teacherDao = TeacherDao.getInstance();
-  }
-public void service(HashMap<String,String> paramMap, PrintStream out) {
+public class TeacherAddController extends AbstractCommand {
 
-  if (teacherDao.existId(paramMap.get("id"))) {
-    out.println("같은 아이디가 존재합니다. 등록을 취소합니다.");
-    return;
-  }
   
+  @Override
+  protected void doResponse(HashMap<String,String> paramMap, PrintStream out)
+      throws Exception {
+    TeacherDao teacherDao = TeacherDao.getInstance();
+    if (teacherDao.existId(paramMap.get("id"))) {
+      out.println("같은 아이디가 존재합니다. 등록을 취소합니다.");
+      return;
+    }
+    
     Teacher teacher = new Teacher();
     teacher.setId(paramMap.get("id"));
     teacher.setName(paramMap.get("name"));
@@ -37,6 +36,5 @@ public void service(HashMap<String,String> paramMap, PrintStream out) {
     
     teacherDao.insert(teacher);
     out.println("등록하였습니다.");
-    }
-  
+  }
 }

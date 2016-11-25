@@ -1,22 +1,19 @@
 package bitcamp.java89.ems.server.controller;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import bitcamp.java89.ems.server.Command;
+import bitcamp.java89.ems.server.AbstractCommand;
 import bitcamp.java89.ems.server.dao.TeacherDao;
 import bitcamp.java89.ems.server.vo.Teacher;
 
-public class TeacherUpdateController implements Command {
-  private TeacherDao teacherDao;
+public class TeacherUpdateController extends AbstractCommand {
   
-  public TeacherUpdateController() {
-    teacherDao = TeacherDao.getInstance();
-  }
-  
-  public void service(HashMap<String,String> paramMap, PrintStream out) {
-
+  @Override
+  protected void doResponse(HashMap<String,String> paramMap, PrintStream out)
+      throws Exception {
+    TeacherDao teacherDao = TeacherDao.getInstance();
+    
     if (!teacherDao.existId(paramMap.get("id"))) {
       out.println("해당 아이디가 없습니다."); 
       return;

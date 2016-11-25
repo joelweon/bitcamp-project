@@ -26,16 +26,12 @@ public class EduAppServer {
     commandMap.put("contact/add", new ContactAddController());
     commandMap.put("contact/delete", new ContactDeleteController());
     commandMap.put("contact/update", new ContactUpdateController());
+
     commandMap.put("teacher/list", new TeacherListController());
     commandMap.put("teacher/view", new TeacherViewController());
     commandMap.put("teacher/add", new TeacherAddController());
     commandMap.put("teacher/delete", new TeacherDeleteController());
     commandMap.put("teacher/update", new TeacherUpdateController());
-//    commandMap.put("student/list", new StudentListController());
-//    commandMap.put("student/view", new StudentListController());
-//    commandMap.put("student/add", new StudentListController());
-//    commandMap.put("student/delete", new StudentListController());
-//    commandMap.put("student/update", new StudentListController());
   }
 
   private void service() throws Exception {

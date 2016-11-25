@@ -1,22 +1,18 @@
 package bitcamp.java89.ems.server.controller;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import bitcamp.java89.ems.server.Command;
+import bitcamp.java89.ems.server.AbstractCommand;
 import bitcamp.java89.ems.server.dao.ContactDao;
 import bitcamp.java89.ems.server.vo.Contact;
 
-public class ContactAddController implements Command {
-  private ContactDao contactDao;
-  
+public class ContactAddController extends AbstractCommand {
 
-  public ContactAddController() {
-    contactDao = ContactDao.getInstance();
-  }
-
-  public void service(HashMap<String,String> paramMap, PrintStream out) {
+  @Override
+  protected void doResponse(HashMap<String,String> paramMap, PrintStream out)
+      throws Exception {
+    ContactDao contactDao = ContactDao.getInstance();
     if (contactDao.existEmail(paramMap.get("email"))) {
       out.println("같은 이메일이 존재합니다. 등록을 취소합니다.");
       return;
@@ -30,5 +26,6 @@ public class ContactAddController implements Command {
 
     contactDao.insert(contact);
     out.println("등록하였습니다.");
+
   }
 }

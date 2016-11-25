@@ -4,18 +4,17 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import bitcamp.java89.ems.server.Command;
+import bitcamp.java89.ems.server.AbstractCommand;
 import bitcamp.java89.ems.server.dao.TeacherDao;
 import bitcamp.java89.ems.server.vo.Teacher;
 
-public class TeacherViewController implements Command {
-  private TeacherDao teacherDao;
+public class TeacherViewController extends AbstractCommand {
   
-  public TeacherViewController() {
-    teacherDao = TeacherDao.getInstance();
-  }
-  
-  public void service(HashMap<String,String> paramMap, PrintStream out) {
+  @Override
+  protected void doResponse(HashMap<String,String> paramMap, PrintStream out)
+      throws Exception {
+    TeacherDao teacherDao = TeacherDao.getInstance();
+    
     ArrayList<Teacher> list = teacherDao.getListById(paramMap.get("id"));
     for (Teacher teacher : list) {
       out.println("-----------------------------------");
