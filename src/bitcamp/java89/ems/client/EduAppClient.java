@@ -13,13 +13,13 @@ public class EduAppClient {
     String serverAddr = keyScan.nextLine();
     
     try (
-      Socket socket = new Socket(serverAddr, 8888);
-      Scanner in = new Scanner(new BufferedInputStream(socket.getInputStream()));
-      PrintStream out = new PrintStream(
-          new BufferedOutputStream(socket.getOutputStream()), true)) {
+        Socket socket = new Socket(serverAddr, 8888);
+        Scanner in = new Scanner(new BufferedInputStream(socket.getInputStream()));
+        PrintStream out = new PrintStream(
+            new BufferedOutputStream(socket.getOutputStream()), true)) {
       
-//      빈줄 입력받을 
       while (true) {
+        // 서버가 보낸 데이터를 읽는다. 빈 줄을 입력 받을 때까지.
         boolean firstLine = true;
         while (true) {
           String message = in.nextLine();
@@ -30,7 +30,7 @@ public class EduAppClient {
           firstLine = false;
         }
         
-  //      사용자로부터 명령을 입력 받아 출력한다.
+        // 사용자로부터 명령을 입력 받아 출력한다.
         String command = keyScan.nextLine();
         out.println(command);
         
@@ -38,11 +38,21 @@ public class EduAppClient {
           break;
         }
       }
-        
+      
     } catch (Exception e) {
       e.printStackTrace();
+      
     } finally {
       keyScan.close();
     }
   }
 }
+
+
+
+
+
+
+
+
+

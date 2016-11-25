@@ -11,9 +11,9 @@ import bitcamp.java89.ems.server.vo.Teacher;
 
 public class TeacherDao {
   static TeacherDao obj;
-  private String filename = "teacher-v1.7.data";
+  private String filename = "teacher-v1.8.data";
   private ArrayList<Teacher> list;
-  private boolean changed;
+
   
   public static TeacherDao getInstance() {
     if (obj == null) {
@@ -26,47 +26,30 @@ public class TeacherDao {
     this.load();
   }
 
-
-  public boolean isChanged() {
-    return changed;
-  }
-
   @SuppressWarnings("unchecked")
   private void load() {
-    FileInputStream in0 = null;
-    ObjectInputStream in = null;
-    
-    try {
-      in0 = new FileInputStream(this.filename);
-      in = new ObjectInputStream(in0);
+    try (
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(this.filename)); ) {
 
       list = (ArrayList<Teacher>)in.readObject();
       
     } catch (EOFException e) {
       // 파일을 모두 읽었다.
     } catch (Exception e) {
-      System.out.println("학생 데이터 로딩 중 오류 발생!");
+      e.printStackTrace();
+      System.out.println("강사 데이터 로딩 중 오류 발생!");
       list = new ArrayList<>();
-    } finally {
-      try {
-        in.close();
-        in0.close();
-      } catch (Exception e) {
-        // close하다가 예외 발생하면 무시한다.
-      }
     }
   }
 
   public void save() throws Exception {
-    FileOutputStream out0 = new FileOutputStream(this.filename);
-    ObjectOutputStream out = new ObjectOutputStream(out0);
-
+    try (
+    ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(this.filename));  ) {
+  
     out.writeObject(list);
-    
-    changed = false;
-
-    out.close();
-    out0.close();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   public ArrayList<Teacher> getList() {
@@ -85,14 +68,14 @@ public class TeacherDao {
   
   synchronized public void insert(Teacher teacher) {
     list.add(teacher);
-    changed = true;
+    try {this.save();} catch (Exception e) {}
   }
 
   synchronized public void update(Teacher teacher) {
     for (int i = 0; i < list.size(); i++) {
       if (list.get(i).getId().equals(teacher.getId())) {
         list.set(i, teacher);
-        changed = true;
+        try {this.save();} catch (Exception e) {}
         return;
       }
     }
@@ -103,7 +86,7 @@ public class TeacherDao {
     for (int i = 0; i < list.size(); i++) {
       if (list.get(i).getId().equals(id)) {
         list.remove(i);
-        changed = true;
+        try {this.save();} catch (Exception e) {}
         return;
       }
     }
