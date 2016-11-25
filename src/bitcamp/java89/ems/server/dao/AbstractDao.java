@@ -12,42 +12,31 @@ import bitcamp.java89.ems.server.vo.Contact;
 // 공통부분을 상속해주기위함이기 때문에
 // 추상 클래스로 만든다. (추상메서드 없어도된다.)
 public abstract class AbstractDao<T> {
-
+  
   private String filename;
   protected ArrayList<T> list;
-
+  
   public AbstractDao(String filename) {
-//    super(); 자동생성!!
     this.filename = filename;
   }
-
-  @SuppressWarnings("unchecked")
-  protected void load() throws Exception {
   
+  @SuppressWarnings("unchecked")
+  protected void load() {
     try (
         ObjectInputStream in = new ObjectInputStream(
-                                  new FileInputStream(this.filename)); ) {
-  
-      list = (ArrayList<T>) in.readObject();
-  
+                                new FileInputStream(this.filename));) {
+      list = (ArrayList<T>)in.readObject();
     } catch (EOFException e) {
-      // 파일을 모두 읽었다.
+        
     } catch (Exception e) {
-      list = new ArrayList<T>();
+      list = new (ArrayList<T>)();
       throw new Exception("데이터 로딩 중 오류 발생!");
     }
   }
-
-  public void save() throws Exception {
+  
+  public synchronized void save() throws Exception {
     try (
-    ObjectOutputStream out = new ObjectOutputStream(
-                                new FileOutputStream(this.filename)); ) {
-  
-    out.writeObject(list);
-  
-    } catch (Exception e) {
-      throw e;
-    }
-  }  
-
+        ObjectOutputStream out = new ObjectOutputStream(
+                                  new FileOutputStream(this.filename));))
+  }
 }
