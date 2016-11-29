@@ -2,9 +2,9 @@
 /.gradle/
 /.settings/
 /gradle/
-/.classpath
-/.project
+/.classpath/
+/.project/
 /build/ 
 /temp/
-/.DS_Store
-/*.data
+/.DS_Store/
+/*.data/
