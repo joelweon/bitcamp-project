@@ -7,9 +7,9 @@ import bitcamp.java89.ems.server.vo.Teacher;
 public class TeacherDao extends AbstractDao<Teacher> {
   
   
-  public TeacherDao() throws Exception {
+  public TeacherDao() {
     this.setFilename("teacher-v1.9.data");
-    this.load();
+    try {this.load();} catch (Exception e) {}
   }
   public ArrayList<Teacher> getList() {
     return this.list;
