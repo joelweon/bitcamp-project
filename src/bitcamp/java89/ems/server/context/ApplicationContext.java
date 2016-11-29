@@ -29,11 +29,15 @@ public class ApplicationContext {
     return objPool.get(name);
   }
   
+//  이 보관소에 저장된 모드 객체를 리턴.
+  public Collection<Object> getAllBeans() {
+    return objPool.values();
+  }
   
   private void injectDependencies() {
 //    HashMap에 저장된 객체 목록을 뽑아 온다.
-    
     Collection<Object> objects = objPool.values();
+    
     for (Object obj : objects) {
 //      System.out.println(obj.getClass().getName());
 //      각 객체의 public 메서드 목록을 뽑는다.
@@ -108,6 +112,16 @@ public class ApplicationContext {
       }
     }
   }
+  
+  private File packageNameToFile(String packageName) {
+//  클래스 파일을 찾을 디렉토리 경로를 정의한다.
+//  그런데 파라미터로 넘어오는 값은 순수한 패키지 이름
+//    예) bitcamp.java89.ems.server.controller)으로 되어있다.
+//  그래서 다음과 같이 파일 경로로 만들려면 "."을 "/"로 변경해야한다.
+//  예) ./bin/bitcamp/java89/ems/server/controller
+    return new File("./bin/" + packageName.replaceAll("\\.", "/")); 
+    
+  }
 
   private void findClasses(File dir, ArrayList<Class<?>> classList) {
     if (!dir.isDirectory()) {             //ㄴ어느클래스인지 상관없다.
@@ -147,15 +161,6 @@ public class ApplicationContext {
     return c.getAnnotation(Component.class) != null;
   }
   
-  private File packageNameToFile(String packageName) {
-//  클래스 파일을 찾을 디렉토리 경로를 정의한다.
-//  그런데 파라미터로 넘어오는 값은 순수한 패키지 이름
-//    예) bitcamp.java89.ems.server.controller)으로 되어있다.
-//  그래서 다음과 같이 파일 경로로 만들려면 "."을 "/"로 변경해야한다.
-//  예) ./bin/bitcamp/java89/ems/server/controller
-    return new File("./bin/" + packageName.replaceAll("\\.", "/")); 
-    
-  }
   
   private Class<?> loadClass(File file) throws IOException, ClassNotFoundException {
     String path = file.getCanonicalPath().replaceAll("\\\\","/").replaceAll(".class", "");
