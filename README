@@ -1,14 +1,139 @@
-# v1.7
-####구현할 기능:
-- EduAppServer.java 코드 정리
-  - static 멤버 대신 instance 멤버로 전환 (EduAppServer.java.01)
-  - 클라이언트의 요청을 처리하는 것을 스레드로 분리(EduAppServer.java.02)
+# v2.4
+####구현할 기능 및 산출물:
+빈 컨테이너 도입 : DAO, Controller 객체 관리를 자동화시킨다. 
+- EduAppServer 클래스로부터 객체 관리 기능을 별도의 클래스로 분리한다.
+  - ApplicationContext.java (생성)
+  - ReflectionUtil 클래스와 ApplicationContext 클래스의 기능을 합친다.
+  - ReflectionUtil.java (제거)
+  - StudentDao, ContactDao 클래스 변경
+    - 생성자 호출 시 load() 메서드를 호출하도록 바꾼다.
+- EduAppServer 클래스는 ApplicationContext 클래스를 사용하여 객체를 다룬다.
+  - EduAppServer.java (변경)
+  - RequestThread.java (변경)
+    
+####학습목표:
+- 빈 컨테이너의 목적을 이해한다.
+- 빈 컨테이너의 내부 구동 원리를 이해한다.
 
-####산출물:
+
+# v2.3
+####구현할 기능 및 산출물:
+의존 객체 주입(Dependency Injection) 적용 
+- DAO 클래스에 적용된 Singleton 패턴을 제거한다.
+  - AbstractDao.java (변경)
+    - 파일명 주입받기: setFilename() 추가 
+    - 파일명 입력 받는 생성자 제거
+  - ContactDao.java (변경)
+    - 생성자 제거
+    - Singleton 관련 스태틱 변수와 스태틱 메서드 제거
+  - StudentDao.java (변경)
+    - 생성자 제거
+    - Singleton 관련 스태틱 변수와 스태틱 메서드 제거
+- Controller 클래스에 DAO를 주입할 수 있도록 인스턴스 변수와 셋터를 추가한다.
+  - ContactXxxController.java에 ContactDao 객체를 저장할 변수와 셋터 추가
+  - StudentXxxController.java에 StudentDao 객체를 저장할 변수와 셋터 추가
+- EduAppServer에서 DAO를 만들어 Controller에 주입한다.
+  - EduAppServer.java (변경)
+    
+####학습목표:
+- 의존 객체 주입을 이해한다.
+- 리플랙션 API를 사용하여 셋터 메서드를 찾아서 의존 객체 주입할 수 있다.
+
+
+# v2.2
+####구현할 기능 및 산출물:
+리플랙션 API를 활용하여 객체 생성 자동화하기 
+- ReflectionUtil.java (추가)
+  - AbstractCommand의 서브 클래스를 찾아 그 클래스 목록을 리턴한다.
+- AbstractCommand.java (변경)
+  - 명령어를 리턴하는 겟터 멧서드 추가. getCommandString()
+- XxxController.java (변경)
+  - 추상 메서드 getCommandString()을 구현 
 - EduAppServer.java (변경)
+  - ReflectionUtil 클래스를 사용하여 커맨드 객체 생성 자동화.
+  
+####학습목표:
+- Reflection API의 용도를 이해한다.
+- 객체 생성을 자동화하는 방법을 이해한다.
+- 추상 메서드(getCommandString())의 용도를 이해한다.
+
+
+# v2.1
+####구현할 기능 및 산출물:
+추상 클래스의 활용
+- AbstractCommand.java (추가)
+  - Command 구현체를 추상클래스로 만든다.
+  - 이 구현체에서 service()를 구현한다.
+    예외 처리 코드를 미리 넣는다.
+  - 서브 클래스에서는 이 클래스가 제공하는 다른 메서드를 오버라이딩 한다.
+  - 이유? XxxController가 반복적으로 하는 예외 처리 코드를 없애기 위해.
+  
+####학습목표:
+- 인터페이스를 구현하는데 추상 클래스 문법을 활용할 수 있다.
+
+
+# v2.0
+####구현할 기능 및 산출물:
+상속의 일반화(generalization) 기법 적용
+- AbstractDao.java (추가)
+  - ContactDao와 StudentDao의 공통 멤버를 추출하여 상위 클래스 정의
+  - ContactDao와 StudentDao는 AbstractDao를 상속 받는다.
+- ContactXxxController와 StudentXxxController 변경
+  - ContactDao와 StudentDao 변경 사항에 맞춰 호출 코드 변경
+  
+####학습목표:
+- 상속의 generalization을 이해하고 적용할 수 있다.
+- 추상 클래스를 적용할 수 있다.
+- try...catch...의 동작원리를 이해한다.
+- 예외를 처리하거나 상위 호출자에게 예외를 던질 수 있다.
+
+# v1.8
+####구현할 기능 및 산출물:
+command 패턴 적용 
+- Command.java 인터페이스 정의
+  - 클라이언트 요청을 들어왔을 때 EduAppServer가 호출하는 메서드 규칙
+  - 클라이언트 요청을 처리하는 클래스는 반드시 이 규칙을 따라야 한다. 
+- ContactController.java에 Command 패턴 적용
+  - ContactListController.java : doList()를 객체화
+  - ContactViewController.java : doView()를 객체화
+  - ContactAddController.java : doAdd()를 객체화
+  - ContactUpdateController.java : doUpdate()를 객체화
+  - ContactDeleteController.java : doDelete()를 객체화
+- StudentController.java에 Command 패턴 적용
+  - StudentListController.java : doList()를 객체화
+  - StudentViewController.java : doView()를 객체화
+  - StudentAddController.java : doAdd()를 객체화
+  - StudentUpdateController.java : doUpdate()를 객체화
+  - StudentDeleteController.java : doDelete()를 객체화
+
+####학습목표:
+- 커맨드 패턴 이해하며 또한 적용할 수 있다.
+- 인터페이스의 용도를 이해한다.
+
+# v1.7
+####구현할 기능 및 산출물:
+- step1 
+  - EduAppServer.java.01
+    - static 멤버 대신 instance 멤버로 전환
+- step2
+  - EduAppServer.java.02
+    - 클라이언트의 요청을 처리하는 부분을 스레드로 분리
+  - RequestThread.java (생성)  
+- step3
+  - StudentDao.java 생성
+    - StudentController.java 에서 데이터 처리 부분을 분리
+    - Singleton 패턴 적용
+    - insert(), update(), delete() 메서드에 동기화 적용
+  - ContactDao.java 생성
+    - ContactController.java 에서 데이터 처리 부분을 분리
+    - Singleton 패턴 적용
+    - insert(), update(), delete() 메서드에 동기화 적용
+  - Controller들이 DAO를 공유하도록 변경 
 
 ####학습목표:
 - 자바의 다양한 문법을 활용하여 유지보수가 좋은 구조로 코드를 변경할 수 있다.
+- DAO(Data Access Object) 객체의 역할을 이해한다.
+- Singleton 패턴을 이해하고 사용할 수 있다.
 
 
 # v1.6
