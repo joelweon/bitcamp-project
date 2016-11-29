@@ -8,6 +8,13 @@ import bitcamp.java89.ems.server.dao.TeacherDao;
 import bitcamp.java89.ems.server.vo.Teacher;
 
 public class TeacherUpdateController extends AbstractCommand {
+  
+  TeacherDao teacherDao;
+  
+ public void setTeacherDao(TeacherDao teacherDao) {
+   this.teacherDao = teacherDao;
+ }
+ 
   @Override
   public String getCommandString() {
     return "teacher/update";
@@ -15,7 +22,6 @@ public class TeacherUpdateController extends AbstractCommand {
   @Override
   protected void doResponse(HashMap<String,String> paramMap, PrintStream out)
       throws Exception {
-    TeacherDao teacherDao = TeacherDao.getInstance();
     
     if (!teacherDao.existId(paramMap.get("id"))) {
       out.println("해당 아이디가 없습니다."); 

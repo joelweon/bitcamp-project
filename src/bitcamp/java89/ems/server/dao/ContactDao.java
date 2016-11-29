@@ -5,22 +5,14 @@ import java.util.ArrayList;
 import bitcamp.java89.ems.server.vo.Contact;
 
 public class ContactDao extends AbstractDao<Contact> {
-  static ContactDao obj;
-  public static ContactDao getInstance() throws Exception {
-    if (obj == null) {
-      obj = new ContactDao();
-      obj.load();
-    }
-    return obj;
-  }
-
+  
   public ContactDao() throws Exception {
-    super("Contact-v1.9.data");
+    this.setFilename("contact-v1.9.data");
+    this.load();
   }
-
-
+  
   public ArrayList<Contact> getList() {
-    return this.list;
+    return this.list; 
   }
   
   public ArrayList<Contact> getListByName(String name) {

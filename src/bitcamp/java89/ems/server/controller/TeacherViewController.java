@@ -9,6 +9,13 @@ import bitcamp.java89.ems.server.dao.TeacherDao;
 import bitcamp.java89.ems.server.vo.Teacher;
 
 public class TeacherViewController extends AbstractCommand {
+  
+  TeacherDao teacherDao;
+  
+ public void setTeacherDao(TeacherDao teacherDao) {
+   this.teacherDao = teacherDao;
+ }
+ 
   @Override
   public String getCommandString() {
     return "teacher/view";
@@ -16,7 +23,6 @@ public class TeacherViewController extends AbstractCommand {
   @Override
   protected void doResponse(HashMap<String,String> paramMap, PrintStream out)
       throws Exception {
-    TeacherDao teacherDao = TeacherDao.getInstance();
     
     ArrayList<Teacher> list = teacherDao.getListById(paramMap.get("id"));
     for (Teacher teacher : list) {

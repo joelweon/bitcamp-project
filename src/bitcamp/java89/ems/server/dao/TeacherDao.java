@@ -5,20 +5,12 @@ import java.util.ArrayList;
 import bitcamp.java89.ems.server.vo.Teacher;
 
 public class TeacherDao extends AbstractDao<Teacher> {
-  static TeacherDao obj;
   
-  public static TeacherDao getInstance() throws Exception {
-    if (obj == null) {
-      obj = new TeacherDao();
-      obj.load();
-    }
-    return obj;
-  }
   
   public TeacherDao() throws Exception {
-    super("Teacher-v1.9.data");
+    this.setFilename("teacher-v1.9.data");
+    this.load();
   }
-  
   public ArrayList<Teacher> getList() {
     return this.list;
   }

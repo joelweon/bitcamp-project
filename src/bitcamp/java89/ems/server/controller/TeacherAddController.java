@@ -4,11 +4,18 @@ import java.io.PrintStream;
 import java.util.HashMap;
 
 import bitcamp.java89.ems.server.AbstractCommand;
+import bitcamp.java89.ems.server.dao.ContactDao;
 import bitcamp.java89.ems.server.dao.TeacherDao;
 import bitcamp.java89.ems.server.vo.Teacher;
 
 public class TeacherAddController extends AbstractCommand {
 
+   TeacherDao teacherDao;
+  
+  public void setTeacherDao(TeacherDao teacherDao) {
+    this.teacherDao = teacherDao;
+  }
+  
   @Override
   public String getCommandString() {
     return "teacher/add";
@@ -16,7 +23,6 @@ public class TeacherAddController extends AbstractCommand {
   @Override
   protected void doResponse(HashMap<String,String> paramMap, PrintStream out)
       throws Exception {
-    TeacherDao teacherDao = TeacherDao.getInstance();
     if (teacherDao.existId(paramMap.get("id"))) {
       out.println("같은 아이디가 존재합니다. 등록을 취소합니다.");
       return;
