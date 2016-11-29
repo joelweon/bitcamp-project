@@ -7,7 +7,7 @@ import bitcamp.java89.ems.server.context.ApplicationContext;
 
 public class EduAppServer {
 //  Ioc 컨테이너
-  HashMap<String,Command> commandMap = new HashMap<>();
+  HashMap<String,Object> commandMap = new HashMap<>();
   ApplicationContext appContext;
 
   public EduAppServer() {

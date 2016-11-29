@@ -3,11 +3,13 @@ package bitcamp.java89.ems.server.controller;
 import java.io.PrintStream;
 import java.util.HashMap;
 
-import bitcamp.java89.ems.server.AbstractCommand;
+import bitcamp.java89.ems.server.annotation.Component;
+import bitcamp.java89.ems.server.annotation.RequestMapping;
 import bitcamp.java89.ems.server.dao.TeacherDao;
 import bitcamp.java89.ems.server.vo.Teacher;
 
-public class TeacherUpdateController extends AbstractCommand {
+@Component(value="teacher/update")
+public class TeacherUpdateController {
   
   TeacherDao teacherDao;
   
@@ -15,12 +17,8 @@ public class TeacherUpdateController extends AbstractCommand {
    this.teacherDao = teacherDao;
  }
  
-  @Override
-  public String getCommandString() {
-    return "teacher/update";
-  }
-  @Override
-  protected void doResponse(HashMap<String,String> paramMap, PrintStream out)
+  @RequestMapping
+  public void update(HashMap<String,String> paramMap, PrintStream out)
       throws Exception {
     
     if (!teacherDao.existId(paramMap.get("id"))) {

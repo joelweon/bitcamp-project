@@ -3,10 +3,12 @@ package bitcamp.java89.ems.server.controller;
 import java.io.PrintStream;
 import java.util.HashMap;
 
-import bitcamp.java89.ems.server.AbstractCommand;
+import bitcamp.java89.ems.server.annotation.Component;
+import bitcamp.java89.ems.server.annotation.RequestMapping;
 import bitcamp.java89.ems.server.dao.ContactDao;
 
-public class ContactDeleteController extends AbstractCommand {
+@Component(value="contact/delete") //ApplicationContext가 관리하는 클래스임을 표시한다.
+public class ContactDeleteController {
 //의존 객체 DAO를 저장할 변수 선언
 ContactDao contactDao;
 
@@ -14,12 +16,8 @@ ContactDao contactDao;
 public void setContactDao(ContactDao contactDao) {
   this.contactDao = contactDao;
 }
-  @Override
-  public String getCommandString() {
-    return "contact/delete";
-  }
-  @Override
-  protected void doResponse(HashMap<String,String> paramMap, PrintStream out)
+  @RequestMapping
+  public void delete(HashMap<String,String> paramMap, PrintStream out)
       throws Exception {
 //  주입받은 ContactDao를 사용할 것이기 때문에
 //  더이상 이 메서드에서 ContactDao 객체를 준비하지 않는다.

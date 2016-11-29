@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+import bitcamp.java89.ems.server.annotation.Component;
+
 public class ApplicationContext {
   HashMap<String,Object> objPool = new HashMap<>();
 
@@ -89,15 +91,18 @@ public class ApplicationContext {
     for (Class<?> clazz : classList) {
       try {
         Object obj = clazz.newInstance();
-        String key = null;
-        try {
-          Method m = clazz.getMethod("getCommandString");
-          key = (String)m.invoke(obj);
-        } catch (Exception e) {
-          key = clazz.getName();
-        }
-        objPool.put(key, obj);
         
+//        클래스에 태깅된 Component 애노테이션 정보를 꺼낸다.
+        Component compAnno = clazz.getAnnotation(Component.class);
+        
+//        애노테이션의 값을 저장할 때는 변수처럼, 값을 꺼낼 때는 메서드처럼 사용한다.
+        if (compAnno.value().length() == 0) { //빈 문자열 이라면
+          objPool.put(clazz.getName(), obj);  // 클래스 이름으로 객체를 저장하고,
+          System.out.println(clazz.getName());
+        } else {
+          objPool.put(compAnno.value(), obj);//애노테이션에 기록한 이름으로 객체를 저장한다.
+          System.out.println(compAnno.value());
+        }
       } catch (Exception e) {
         e.printStackTrace();
       }
@@ -123,10 +128,12 @@ public class ApplicationContext {
     for (File file : files) {
       if (file.isDirectory()) {
         findClasses(file, classList);
+        
       } else {
         try {
           Class<?> c = loadClass(file);
-          if (!isAbstract(c)) {
+          
+          if (!isAbstract(c) && isComponent(c)) {
             classList.add(c);
           }
         } catch (Exception e) {
@@ -134,6 +141,10 @@ public class ApplicationContext {
         }
       }
     }
+  }
+  
+  private boolean isComponent(Class<?> c) {
+    return c.getAnnotation(Component.class) != null;
   }
   
   private File packageNameToFile(String packageName) {
@@ -165,5 +176,7 @@ public class ApplicationContext {
 //    ApplicationContext appContext = new ApplicationContext(new String[] {
 //            "bitcamp.java89.ems.server.controller",
 //            "bitcamp.java89.ems.server.dao"});
-//  }//  ======> Test용으로 만든 예제임. 필요한 경우 main메소드 만들어주면됨
+//  }
+  
+  //  ======> Test용으로 만든 예제임. 필요한 경우 main메소드 만들어주면됨
 }

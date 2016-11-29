@@ -4,11 +4,13 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import bitcamp.java89.ems.server.AbstractCommand;
+import bitcamp.java89.ems.server.annotation.Component;
+import bitcamp.java89.ems.server.annotation.RequestMapping;
 import bitcamp.java89.ems.server.dao.TeacherDao;
 import bitcamp.java89.ems.server.vo.Teacher;
 
-public class TeacherListController extends AbstractCommand {
+@Component(value="teacher/list")
+public class TeacherListController {
   
   TeacherDao teacherDao;
   
@@ -16,12 +18,8 @@ public class TeacherListController extends AbstractCommand {
    this.teacherDao = teacherDao;
  }
 
-  @Override
-  public String getCommandString() {
-    return "teacher/list";
-  }
-  @Override
-  protected void doResponse(HashMap<String,String> paramMap, PrintStream out)
+  @RequestMapping
+  public void list(HashMap<String,String> paramMap, PrintStream out)
       throws Exception {
     ArrayList<Teacher> list = teacherDao.getList();
     for (Teacher teacher : list) {

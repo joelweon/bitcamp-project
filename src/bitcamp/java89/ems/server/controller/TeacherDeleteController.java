@@ -3,10 +3,12 @@ package bitcamp.java89.ems.server.controller;
 import java.io.PrintStream;
 import java.util.HashMap;
 
-import bitcamp.java89.ems.server.AbstractCommand;
+import bitcamp.java89.ems.server.annotation.Component;
+import bitcamp.java89.ems.server.annotation.RequestMapping;
 import bitcamp.java89.ems.server.dao.TeacherDao;
 
-public class TeacherDeleteController extends AbstractCommand {
+@Component(value="teacher/delete")
+public class TeacherDeleteController {
 
   TeacherDao teacherDao;
   
@@ -14,12 +16,8 @@ public class TeacherDeleteController extends AbstractCommand {
    this.teacherDao = teacherDao;
  }
  
-  @Override
-  public String getCommandString() {
-    return "teacher/delete";
-  }
-  @Override
-  protected void doResponse(HashMap<String,String> paramMap, PrintStream out)
+  @RequestMapping
+  public void delete(HashMap<String,String> paramMap, PrintStream out)
       throws Exception {
     if (!teacherDao.existId(paramMap.get("id"))) {
       out.println("존재하지 않는 아이디 입니다.");
