@@ -11,8 +11,6 @@ public class Teacher implements Serializable {
   protected String tel;
   protected String major;
   protected String majorLanguage;
-  protected String book;
-  protected String projectName;
   protected String gitAddress;
   protected int workExperience;
   protected int lectureExperience;
@@ -77,21 +75,6 @@ public class Teacher implements Serializable {
     this.majorLanguage = majorLanguage;
   }
 
-  public String getBook() {
-    return book;
-  }
-
-  public void setBook(String book) {
-    this.book = book;
-  }
-
-  public String getProjectName() {
-    return projectName;
-  }
-
-  public void setProjectName(String projectName) {
-    this.projectName = projectName;
-  }
 
   public String getGitAddress() {
     return gitAddress;

@@ -27,8 +27,6 @@ public class TeacherController {
       @RequestParam("tel") String tel,
       @RequestParam("major") String major,
       @RequestParam("majorLanguage") String majorLanguage,
-      @RequestParam("book") String book,
-      @RequestParam("projectName") String projectName,
       @RequestParam("gitAddress") String gitAddress,
       @RequestParam("workExperience") int workExperience,
       @RequestParam("lectureExperience") int lectureExperience,
@@ -48,8 +46,6 @@ public class TeacherController {
     teacher.setTel(tel);
     teacher.setMajor(major);
     teacher.setMajorLanguage(majorLanguage);
-    teacher.setBook(book);
-    teacher.setProjectName(projectName);
     teacher.setGitAddress(gitAddress);
     teacher.setWorkExperience(workExperience);
     teacher.setLectureExperience(lectureExperience);
@@ -84,8 +80,6 @@ public class TeacherController {
         teacher.getTel(),
         teacher.getMajor(),
         teacher.getMajorLanguage(),
-        teacher.getBook(),
-        teacher.getProjectName(),
         teacher.getGitAddress(),
         teacher.getWorkExperience(),
         teacher.getLectureExperience(),
@@ -103,8 +97,6 @@ public class TeacherController {
       @RequestParam("tel") String tel,
       @RequestParam("major") String major,
       @RequestParam("majorLanguage") String majorLanguage,
-      @RequestParam("book") String book,
-      @RequestParam("projectName") String projectName,
       @RequestParam("gitAddress") String gitAddress,
       @RequestParam("workExperience") int workExperience,
       @RequestParam("lectureExperience") int lectureExperience,
@@ -125,8 +117,6 @@ public class TeacherController {
     teacher.setTel(tel);
     teacher.setMajor(major);
     teacher.setMajorLanguage(majorLanguage);
-    teacher.setBook(book);
-    teacher.setProjectName(projectName);
     teacher.setGitAddress(gitAddress);
     teacher.setWorkExperience(workExperience);
     teacher.setLectureExperience(lectureExperience);
@@ -149,8 +139,6 @@ public class TeacherController {
       out.printf("이메일: %s\n", teacher.getEmail());
       out.printf("전화번호: %s\n", teacher.getTel());
       out.printf("주요언어: %s\n", teacher.getMajorLanguage());
-      out.printf("저서: %s\n", teacher.getBook());
-      out.printf("프로젝트명: %s\n", teacher.getProjectName());
       out.printf("Git주소: %s\n", teacher.getGitAddress());
       out.printf("직장경력: %d\n", teacher.getWorkExperience());
       out.printf("강의경력: %d\n", teacher.getLectureExperience());
