@@ -5,9 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import bitcamp.java89.ems.server.annotation.Component;
-import bitcamp.java89.ems.server.annotation.Component;
-import bitcamp.java89.ems.server.annotation.Component;
 import bitcamp.java89.ems.server.annotation.RequestMapping;
+import bitcamp.java89.ems.server.annotation.RequestParam;
 import bitcamp.java89.ems.server.dao.ContactDao;
 import bitcamp.java89.ems.server.vo.Contact;
 
@@ -24,46 +23,53 @@ public class ContactController {
 
 
   @RequestMapping(value="contact/add")
-  public void add(HashMap<String,String> paramMap, PrintStream out)
+  public void add(
+      @RequestParam("name") String name,
+      @RequestParam("tel") String tel,
+      @RequestParam("position") String position,
+      @RequestParam("email") String email,
+      PrintStream out)
       throws Exception {
 //    주입받은 ContactDao를 사용할 것이기 때문에
 //    더이상 이 메서드에서 ContactDao 객체를 준비하지 않는다.
 //    ContactDao contactDao = ContactDao.getInstance();
 //    => 단 이 메서드가 호출되기 전에 반드시 ContactDao가 주입되어 있어야한다.
-    if (contactDao.existEmail(paramMap.get("email"))) {
+    if (contactDao.existEmail(email)) {
       out.println("같은 이메일이 존재합니다. 등록을 취소합니다.");
       return;
     }
 
     Contact contact = new Contact();
-    contact.setName(paramMap.get("name"));
-    contact.setPosition(paramMap.get("position"));
-    contact.setTel(paramMap.get("tel"));
-    contact.setEmail(paramMap.get("email"));
+    contact.setName(name);
+    contact.setPosition(position);
+    contact.setTel(tel);
+    contact.setEmail(email);
 
     contactDao.insert(contact);
     out.println("등록하였습니다.");
   }
   
   @RequestMapping(value="contact/delete")
-  public void delete(HashMap<String,String> paramMap, PrintStream out)
+  public void delete(
+      @RequestParam("email") String email,
+      PrintStream out)
       throws Exception {
 //  주입받은 ContactDao를 사용할 것이기 때문에
 //  더이상 이 메서드에서 ContactDao 객체를 준비하지 않는다.
 //    ContactDao contactDao = ContactDao.getInstance();
 //  => 단 이 메서드가 호출되기 전에 반드시 ContactDao가 주입되어 있어야한다.
-    if (!contactDao.existEmail(paramMap.get("email"))) {
+    if (!contactDao.existEmail(email)) {
       out.println("존재하지 않는 이메일 입니다.");
       return;
     }
 
-    contactDao.delete(paramMap.get("email"));
+    contactDao.delete(email);
     out.println("해당 데이터를 삭제하였습니다.");
   }
   
   
   @RequestMapping(value="contact/list")
-  public void list(HashMap<String,String> paramMap, PrintStream out)
+  public void list(PrintStream out)
       throws Exception {
 //  주입받은 ContactDao를 사용할 것이기 때문에
 //  더이상 이 메서드에서 ContactDao 객체를 준비하지 않는다.
@@ -80,37 +86,42 @@ public class ContactController {
   }
   
   @RequestMapping(value="contact/update")
-  public void update(HashMap<String,String> paramMap, PrintStream out)
+  public void update(
+      @RequestParam("name") String name,
+      @RequestParam("tel") String tel,
+      @RequestParam("position") String position,
+      @RequestParam("email") String email,
+      PrintStream out)
       throws Exception {
 //  주입받은 ContactDao를 사용할 것이기 때문에
 //  더이상 이 메서드에서 ContactDao 객체를 준비하지 않는다.
 //    ContactDao contactDao = ContactDao.getInstance();
 //  => 단 이 메서드가 호출되기 전에 반드시 ContactDao가 주입되어 있어야한다.
     
-    if (!contactDao.existEmail(paramMap.get("email"))) {
+    if (!contactDao.existEmail(email)) {
       out.println("해당 이메일이 없습니다.");
       return;
     }
     
     Contact contact = new Contact();
-    contact.setEmail(paramMap.get("email"));
-    contact.setName(paramMap.get("name"));
-    contact.setPosition(paramMap.get("position"));
-    contact.setTel(paramMap.get("tel"));
+    contact.setEmail(email);
+    contact.setName(name);
+    contact.setPosition(position);
+    contact.setTel(tel);
     
     contactDao.update(contact);
     out.println("변경 완료했습니다.");
   }
   
   @RequestMapping(value="contact/view")
-  public void view(HashMap<String,String> paramMap, PrintStream out)
+  public void view(@RequestParam("name") String name, PrintStream out)
       throws Exception {
 //  주입받은 ContactDao를 사용할 것이기 때문에
 //  더이상 이 메서드에서 ContactDao 객체를 준비하지 않는다.
 //    ContactDao contactDao = ContactDao.getInstance();
 //  => 단 이 메서드가 호출되기 전에 반드시 ContactDao가 주입되어 있어야한다.
     
-    ArrayList<Contact> list = contactDao.getListByName(paramMap.get("name"));
+    ArrayList<Contact> list = contactDao.getListByName(name);
     for (Contact contact : list) {
         out.println("-------------------------------");
         out.printf("이름: %s\n", contact.getName());

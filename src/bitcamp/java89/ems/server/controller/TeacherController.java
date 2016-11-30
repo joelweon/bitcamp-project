@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import bitcamp.java89.ems.server.annotation.Component;
 import bitcamp.java89.ems.server.annotation.RequestMapping;
+import bitcamp.java89.ems.server.annotation.RequestParam;
 import bitcamp.java89.ems.server.dao.TeacherDao;
 import bitcamp.java89.ems.server.vo.Teacher;
 
@@ -19,46 +20,60 @@ public class TeacherController {
   }
   
   @RequestMapping(value="teacher/add")
-  public void add(HashMap<String,String> paramMap, PrintStream out)
+  public void add(
+      @RequestParam("id") String id,
+      @RequestParam("name") String name,
+      @RequestParam("email") String email,
+      @RequestParam("tel") String tel,
+      @RequestParam("major") String major,
+      @RequestParam("majorLanguage") String majorLanguage,
+      @RequestParam("book") String book,
+      @RequestParam("projectName") String projectName,
+      @RequestParam("gitAddress") String gitAddress,
+      @RequestParam("workExperience") int workExperience,
+      @RequestParam("lectureExperience") int lectureExperience,
+      @RequestParam("age") int age,
+      @RequestParam("salary") int salary,
+      PrintStream out)
       throws Exception {
-    if (teacherDao.existId(paramMap.get("id"))) {
+    if (teacherDao.existId(id)) {
       out.println("같은 아이디가 존재합니다. 등록을 취소합니다.");
       return;
     }
     
     Teacher teacher = new Teacher();
-    teacher.setId(paramMap.get("id"));
-    teacher.setName(paramMap.get("name"));
-    teacher.setEmail(paramMap.get("email"));
-    teacher.setTel(paramMap.get("tel"));
-    teacher.setMajor(paramMap.get("major"));
-    teacher.setMajorLanguage(paramMap.get("majorLanguage"));
-    teacher.setBook(paramMap.get("book"));
-    teacher.setProjectName(paramMap.get("projectName"));
-    teacher.setGitAddress(paramMap.get("gitAddress"));
-    teacher.setWorkExperience(Integer.parseInt(paramMap.get("workExperience")));
-    teacher.setLectureExperience(Integer.parseInt(paramMap.get("lectureExperience")));
-    teacher.setAge(Integer.parseInt(paramMap.get("age")));
-    teacher.setSalary(Integer.parseInt(paramMap.get("salary")));
+    teacher.setId(id);
+    teacher.setName(name);
+    teacher.setEmail(email);
+    teacher.setTel(tel);
+    teacher.setMajor(major);
+    teacher.setMajorLanguage(majorLanguage);
+    teacher.setBook(book);
+    teacher.setProjectName(projectName);
+    teacher.setGitAddress(gitAddress);
+    teacher.setWorkExperience(workExperience);
+    teacher.setLectureExperience(lectureExperience);
+    teacher.setAge(age);
+    teacher.setSalary(salary);
     
     teacherDao.insert(teacher);
     out.println("등록하였습니다.");
   }
   
   @RequestMapping(value="teacher/delete")
-  public void delete(HashMap<String,String> paramMap, PrintStream out)
+  public void delete(@RequestParam("id") String id, PrintStream out)
       throws Exception {
-    if (!teacherDao.existId(paramMap.get("id"))) {
+    if (!teacherDao.existId(id)) {
       out.println("존재하지 않는 아이디 입니다.");
       return;
     }
   
-    teacherDao.delete(paramMap.get("id"));
+    teacherDao.delete(id);
     out.println("삭제하였습니다.");  
   }
   
   @RequestMapping(value="teacher/list")
-  public void list(HashMap<String,String> paramMap, PrintStream out)
+  public void list(PrintStream out)
       throws Exception {
     ArrayList<Teacher> list = teacherDao.getList();
     for (Teacher teacher : list) {
@@ -81,38 +96,52 @@ public class TeacherController {
   }
   
   @RequestMapping(value="teacher/update")
-  public void update(HashMap<String,String> paramMap, PrintStream out)
+  public void update(
+      @RequestParam("id") String id,
+      @RequestParam("name") String name,
+      @RequestParam("email") String email,
+      @RequestParam("tel") String tel,
+      @RequestParam("major") String major,
+      @RequestParam("majorLanguage") String majorLanguage,
+      @RequestParam("book") String book,
+      @RequestParam("projectName") String projectName,
+      @RequestParam("gitAddress") String gitAddress,
+      @RequestParam("workExperience") int workExperience,
+      @RequestParam("lectureExperience") int lectureExperience,
+      @RequestParam("age") int age,
+      @RequestParam("salary") int salary,
+      PrintStream out)
       throws Exception {
     
-    if (!teacherDao.existId(paramMap.get("id"))) {
+    if (!teacherDao.existId(id)) {
       out.println("해당 아이디가 없습니다."); 
       return;
     }
 
     Teacher teacher = new Teacher();
-    teacher.setId(paramMap.get("id"));
-    teacher.setName(paramMap.get("name"));
-    teacher.setEmail(paramMap.get("email"));
-    teacher.setTel(paramMap.get("tel"));
-    teacher.setMajor(paramMap.get("major"));
-    teacher.setMajorLanguage(paramMap.get("majorLanguage"));
-    teacher.setBook(paramMap.get("book"));
-    teacher.setProjectName(paramMap.get("projectName"));
-    teacher.setGitAddress(paramMap.get("gitAddress"));
-    teacher.setWorkExperience(Integer.parseInt(paramMap.get("workExperience")));
-    teacher.setLectureExperience(Integer.parseInt(paramMap.get("lectureExperience")));
-    teacher.setAge(Integer.parseInt(paramMap.get("age")));
-    teacher.setSalary(Integer.parseInt(paramMap.get("salary")));
+    teacher.setId(id);
+    teacher.setName(name);
+    teacher.setEmail(email);
+    teacher.setTel(tel);
+    teacher.setMajor(major);
+    teacher.setMajorLanguage(majorLanguage);
+    teacher.setBook(book);
+    teacher.setProjectName(projectName);
+    teacher.setGitAddress(gitAddress);
+    teacher.setWorkExperience(workExperience);
+    teacher.setLectureExperience(lectureExperience);
+    teacher.setAge(age);
+    teacher.setSalary(salary);
     
     teacherDao.update(teacher);
     out.println("변경 완료했습니다.");
   }
   
   @RequestMapping(value="teacher/view")
-  public void view(HashMap<String,String> paramMap, PrintStream out)
+  public void view(@RequestParam("id") String id, PrintStream out)
       throws Exception {
     
-    ArrayList<Teacher> list = teacherDao.getListById(paramMap.get("id"));
+    ArrayList<Teacher> list = teacherDao.getListById(id);
     for (Teacher teacher : list) {
       out.println("-----------------------------------");
       out.printf("아이디: %s\n", teacher.getId());
