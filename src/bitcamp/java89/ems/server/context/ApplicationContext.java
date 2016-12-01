@@ -136,7 +136,7 @@ public class ApplicationContext {
         if (pathname.getName().endsWith(".class") && !pathname.getName().contains("$"))
           return true;
         return false;
-      }
+      }//**true면 디렉토리 객체가 포함하는 파일의 이름이 걸러진다.
     });
     
     for (File file : files) {

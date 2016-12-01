@@ -2,7 +2,6 @@ package bitcamp.java89.ems.server.controller;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import bitcamp.java89.ems.server.annotation.Component;
 import bitcamp.java89.ems.server.annotation.RequestMapping;
@@ -73,7 +72,7 @@ public class TeacherController {
       throws Exception {
     ArrayList<Teacher> list = teacherDao.getList();
     for (Teacher teacher : list) {
-      out.printf("%s,%s,%s,%s,%s,%s,%s,%s,%s,%d,%d,%d,%d\n",
+      out.printf("%s,%s,%s,%s,%s,%s,%s,%d,%d,%d,%d\n",
         teacher.getId(),
         teacher.getName(),
         teacher.getEmail(),

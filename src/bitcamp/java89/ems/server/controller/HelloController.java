@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import bitcamp.java89.ems.server.annotation.Component;
-import bitcamp.java89.ems.server.dao.TeacherDao;
+import bitcamp.java89.ems.server.dao.impl.TeacherFileDao;
 import bitcamp.java89.ems.server.vo.Teacher;
 
 public class HelloController {
-  TeacherDao teacherDao;
+  TeacherFileDao teacherDao;
   
-  public void setTeacherDao(TeacherDao teacherDao) {
+  public void setTeacherDao(TeacherFileDao teacherDao) {
     this.teacherDao = teacherDao;
   }
   

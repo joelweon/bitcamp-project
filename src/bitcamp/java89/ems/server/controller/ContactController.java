@@ -2,7 +2,6 @@ package bitcamp.java89.ems.server.controller;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import bitcamp.java89.ems.server.annotation.Component;
 import bitcamp.java89.ems.server.annotation.RequestMapping;
@@ -13,7 +12,9 @@ import bitcamp.java89.ems.server.vo.Contact;
 @Component
 public class ContactController {
 
-//  의존 객체 DAO를 저장할 변수 선언
+//  의존 객체 DAO를 저장하기 위한 변수
+//  => 직접 클래스 이름을 명시하기 보다 인터페이스 변수를 선언하는 것이
+//     향후 확장성에 좋다. 왜? 이 변수에 다양한 객체를 널을 수 있기 때문이다.
   ContactDao contactDao;
   
 //   
