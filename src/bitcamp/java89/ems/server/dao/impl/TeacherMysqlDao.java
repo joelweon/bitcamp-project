@@ -8,19 +8,21 @@ import java.util.ArrayList;
 
 import bitcamp.java89.ems.server.annotation.Component;
 import bitcamp.java89.ems.server.dao.TeacherDao;
+import bitcamp.java89.ems.server.util.DataSource;
 import bitcamp.java89.ems.server.vo.Teacher;
 
 @Component
 public class TeacherMysqlDao implements TeacherDao {
-  Connection con;
+  DataSource ds;
   
 //  connection 객체 외부에서 주입받기
-  public void setConnection(Connection con) {
-    this.con = con;
+  public void setDataSoutce(DataSource dataSoutce) {
+    this.ds = dataSoutce;
   }
   
   public ArrayList<Teacher> getList() throws Exception {
     ArrayList<Teacher> list = new ArrayList<>();
+    Connection con = ds.getConnection();
     try (
       PreparedStatement stmt = con.prepareStatement(
           "select id, name, email, tel, major, mlanguage, gitaddr,"
@@ -42,11 +44,14 @@ public class TeacherMysqlDao implements TeacherDao {
         teacher.setSalary(rs.getInt("salary"));
         list.add(teacher);
       }
+    } finally { //다썼으니 돌려주기
+      ds.returnConnection(con);
     }
     return list;
   }
 
   public void insert(Teacher teacher) throws Exception {
+    Connection con = ds.getConnection();
     try (
       PreparedStatement stmt = con.prepareStatement(
           "insert into ex_teachers(id, name, email, tel, major, mlanguage, gitaddr,"
@@ -65,10 +70,13 @@ public class TeacherMysqlDao implements TeacherDao {
       stmt.setInt(11, teacher.getSalary());
       
       stmt.executeUpdate();
+    } finally {
+      ds.returnConnection(con);
     }
   }
   
   public void update(Teacher teacher) throws Exception {
+    Connection con = ds.getConnection();
     try (
       PreparedStatement stmt = con.prepareStatement(
           "update ex_teachers set name=?, email=?, tel=?, major=?, mlanguage=?,"
@@ -91,6 +99,7 @@ public class TeacherMysqlDao implements TeacherDao {
   }
   
   public void delete(String id) throws Exception {
+    Connection con = ds.getConnection();
     try (
       PreparedStatement stmt = con.prepareStatement(
           "delete from ex_teachers where id=?"); ) {
@@ -98,10 +107,13 @@ public class TeacherMysqlDao implements TeacherDao {
       stmt.setString(1, id);
       
       stmt.executeUpdate();
-    } 
+    }  finally {
+      ds.returnConnection(con);
+    }
   }
   
   public boolean existId(String id) throws Exception {
+    Connection con = ds.getConnection();
     try (
       PreparedStatement stmt = con.prepareStatement(
           "select * from ex_teachers where id=?"); ) {
@@ -116,11 +128,14 @@ public class TeacherMysqlDao implements TeacherDao {
         rs.close();
         return false;
       }
+    } finally {
+      ds.returnConnection(con);
     }
   }
   
   
   public ArrayList<Teacher> getListById(String id) throws Exception {
+    Connection con = ds.getConnection();
     ArrayList<Teacher> list = new ArrayList<>();
     try (
       PreparedStatement stmt = con.prepareStatement(
@@ -147,6 +162,8 @@ public class TeacherMysqlDao implements TeacherDao {
       }
       
       rs.close();
+    } finally {
+      ds.returnConnection(con);
     }
     return list;
   }
