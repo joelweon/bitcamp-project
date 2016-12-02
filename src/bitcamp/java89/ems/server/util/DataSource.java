@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.ArrayList;
 
-import bitcamp.java89.ems.server.annotation.Component;
+import org.springframework.stereotype.Component;
 
 // ioc컨테이너! 얘도 객체생성해서 관리해!
 // 태그의 역할 
