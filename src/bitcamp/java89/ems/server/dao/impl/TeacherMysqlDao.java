@@ -12,15 +12,16 @@ import bitcamp.java89.ems.server.vo.Teacher;
 
 @Component
 public class TeacherMysqlDao implements TeacherDao {
+  Connection con;
   
-  public TeacherMysqlDao() {}
+//  connection 객체 외부에서 주입받기
+  public void setConnection(Connection con) {
+    this.con = con;
+  }
   
   public ArrayList<Teacher> getList() throws Exception {
     ArrayList<Teacher> list = new ArrayList<>();
-    Class.forName("com.mysql.jdbc.Driver");
     try (
-      Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/java89db", 
-          "java89", "1111");
       PreparedStatement stmt = con.prepareStatement(
           "select id, name, email, tel, major, mlanguage, gitaddr,"
           + " work, lecture, age, salary from ex_teachers");
@@ -46,10 +47,7 @@ public class TeacherMysqlDao implements TeacherDao {
   }
 
   public void insert(Teacher teacher) throws Exception {
-    Class.forName("com.mysql.jdbc.Driver");
     try (
-      Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/java89db", 
-          "java89", "1111");
       PreparedStatement stmt = con.prepareStatement(
           "insert into ex_teachers(id, name, email, tel, major, mlanguage, gitaddr,"
           + " work, lecture, age, salary) values(?,?,?,?,?,?,?,?,?,?,?)"); ) {
@@ -71,10 +69,7 @@ public class TeacherMysqlDao implements TeacherDao {
   }
   
   public void update(Teacher teacher) throws Exception {
-    Class.forName("com.mysql.jdbc.Driver");
     try (
-      Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/java89db", 
-          "java89", "1111");
       PreparedStatement stmt = con.prepareStatement(
           "update ex_teachers set name=?, email=?, tel=?, major=?, mlanguage=?,"
           + " gitaddr=?, work=?, lecture=?, age=?, salary=? where id=?"); ) {
@@ -96,10 +91,7 @@ public class TeacherMysqlDao implements TeacherDao {
   }
   
   public void delete(String id) throws Exception {
-    Class.forName("com.mysql.jdbc.Driver");
     try (
-      Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/java89db", 
-          "java89", "1111");
       PreparedStatement stmt = con.prepareStatement(
           "delete from ex_teachers where id=?"); ) {
       
@@ -110,10 +102,7 @@ public class TeacherMysqlDao implements TeacherDao {
   }
   
   public boolean existId(String id) throws Exception {
-    Class.forName("com.mysql.jdbc.Driver");
     try (
-      Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/java89db", 
-          "java89", "1111");
       PreparedStatement stmt = con.prepareStatement(
           "select * from ex_teachers where id=?"); ) {
       
@@ -133,10 +122,7 @@ public class TeacherMysqlDao implements TeacherDao {
   
   public ArrayList<Teacher> getListById(String id) throws Exception {
     ArrayList<Teacher> list = new ArrayList<>();
-    Class.forName("com.mysql.jdbc.Driver");
     try (
-      Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/java89db", 
-          "java89", "1111");
       PreparedStatement stmt = con.prepareStatement(
           "select id, name, email, tel, major, mlanguage, gitaddr, work,"
           + " lecture, age, salary from ex_teachers where id=?"); ) {

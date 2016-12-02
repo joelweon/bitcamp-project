@@ -12,6 +12,8 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import bitcamp.java89.ems.server.annotation.Component;
 
@@ -19,9 +21,23 @@ public class ApplicationContext {
   HashMap<String,Object> objPool = new HashMap<>();
 
   public ApplicationContext(String[] packages) {
+    this(packages, null); //밑을 호출하고 널이면 밑 3줄만 실행 
+  }
+  //객체가 미리들어있으면(바깥에 있는) 것도 담고 
+  public ApplicationContext(String[] packages, HashMap<String, Object> builtInObjMap) {
+    if (builtInObjMap != null) {
+//      외부에서 넘겨준 객체를 포함시킨다.
+      Set<Entry<String,Object>> entrySet = builtInObjMap.entrySet();
+      for (Entry<String,Object> entry : entrySet) { //그 목록은 반복문
+        objPool.put(entry.getKey(), entry.getValue());// 키가 이름 값을 pool에 넣는 것.
+      }
+    }
     ArrayList<Class<?>> classList = getClassList(packages); //스트링으로 된 
     prepareObjects(classList); //클래스로부터 객체 준비
     injectDependencies();
+    //주어진 패키지를 뒤져서 @애노테이션을 찾아서 객체를 만들고 의존객체 주입하는일!
+//    자동으로 만드는것 외에 
+//    기존에 있는거 MAP객체에 데이터가있으면 
   }
 
   
